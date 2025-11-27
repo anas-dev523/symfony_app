@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Défi du jour{% endblock %}
+
+{% block body %}
+    <h1>Défi du jour</h1>
+
+    {% if defi %}
+        <h2>{{ defi.titre }}</h2>
+        <p>{{ defi.description }}</p>
+        <p>Difficulté : {{ defi.difficulte }} – Durée : {{ defi.duree }} jour(s)</p>
+    {% else %}
+        <p>Aucun défi disponible pour le moment.</p>
+    {% endif %}
+
+    <p><a href="{{ path('app_defi_index') }}">Voir tous les défis</a></p>
+{% endblock %}

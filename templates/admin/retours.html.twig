@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Retours{% endblock %}
+
+{% block body %}
+    <h1>Administration des retours d'expérience</h1>
+
+    {% if retours is empty %}
+        <p>Aucun retour.</p>
+    {% else %}
+        <ul>
+            {% for retour in retours %}
+                <li>
+                    <strong>Défi :</strong> {{ retour.defi.titre ?? 'N/A' }}<br>
+                    {{ retour.contenu }}<br>
+                    <small>{{ retour.dateRetour|date('d/m/Y H:i') }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

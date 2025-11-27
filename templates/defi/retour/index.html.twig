@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Retours sur le défi {{ defi.titre }}{% endblock %}
+
+{% block body %}
+    <h1>Retours d'expérience sur : {{ defi.titre }}</h1>
+
+    {% if retours is empty %}
+        <p>Aucun retour pour ce défi pour l’instant.</p>
+    {% else %}
+        <ul>
+            {% for retour in retours %}
+                <li>
+                    <p>{{ retour.contenu }}</p>
+                    <small>
+                        Emoji : {{ retour.emoji }} |
+                        Date : {{ retour.dateRetour|date('d/m/Y H:i') }}
+                    </small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <p><a href="{{ path('app_defi_index') }}">← Retour à la liste des défis</a></p>
+{% endblock %}

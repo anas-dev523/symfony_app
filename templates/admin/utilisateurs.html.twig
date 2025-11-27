@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>Liste des utilisateurs</h1>
+
+    {% if utilisateurs is empty %}
+        <p>Aucun utilisateur.</p>
+    {% else %}
+        <ul>
+            {% for u in utilisateurs %}
+                <li>
+                    {{ u.prenom }} {{ u.nom }} – {{ u.email }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

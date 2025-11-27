@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace admin{% endblock %}
+
+{% block body %}
+    <h1>Espace administrateur</h1>
+
+    <ul>
+        <li><a href="{{ path('app_admin_defis') }}">Gérer les défis</a></li>
+        <li><a href="{{ path('app_admin_retours') }}">Gérer les retours d'expérience</a></li>
+        <li><a href="{{ path('app_admin_utilisateurs') }}">Voir les utilisateurs</a></li>
+    </ul>
+{% endblock %}
