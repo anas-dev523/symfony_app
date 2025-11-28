@@ -8,7 +8,7 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: id_utilisateur
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -16,18 +16,24 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_home
+                enable_csrf: true
+            logout:
+                path: app_logout
+                target: app_home
+            remember_me:
+                secret: '%kernel.secret%'
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/defi/nouveau, roles: ROLE_USER }
+        - { path: ^/defi/\d+/retour/nouveau, roles: ROLE_USER }
+        - { path: ^/defi/\d+/aide/nouvelle, roles: ROLE_USER }
 
 when@test:
     security:

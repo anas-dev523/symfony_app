@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\RetourExperienceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RetourExperienceRepository::class)]
 class RetourExperience
@@ -14,9 +15,16 @@ class RetourExperience
     private ?int $id = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: 'Le contenu du retour est obligatoire.')]
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'Le retour doit contenir au moins {{ limit }} caractères.'
+    )]
     private string $contenu;
 
     #[ORM\Column(length: 10)]
+    #[Assert\NotBlank(message: 'Merci de choisir un emoji.')]
+    #[Assert\Length(max: 10, maxMessage: 'L’emoji ne doit pas dépasser {{ limit }} caractères.')]
     private string $emoji;
 
     #[ORM\Column(type: 'datetime_immutable')]
@@ -24,10 +32,12 @@ class RetourExperience
 
     #[ORM\ManyToOne(inversedBy: 'retoursExperience')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Un utilisateur est requis pour créer un retour.')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'retoursExperience')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Le défi associé est obligatoire.')]
     private ?Defi $defi = null;
 
     public function getId(): ?int { return $this->id; }

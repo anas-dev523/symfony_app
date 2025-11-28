@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin - Défis{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Gestion des défis</h1>
+
+    {% if defis is empty %}
+        <p>Aucun défi pour le moment.</p>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Titre</th>
+                    <th>Difficulté</th>
+                    <th>Statut</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for defi in defis %}
+                    <tr>
+                        <td>{{ defi.id }}</td>
+                        <td>{{ defi.titre }}</td>
+                        <td>{{ defi.difficulte }}</td>
+                        <td>
+                            {% if defi.statutModeration %}
+                                <span class="badge bg-info">{{ defi.statutModeration }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Non défini</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <form method="post" action="{{ path('app_admin_defi_valider', { id: defi.id }) }}" class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('valider_defi_' ~ defi.id) }}">
+                                <button class="btn btn-success btn-sm">Valider</button>
+                            </form>
+                            <form method="post" action="{{ path('app_admin_defi_supprimer', { id: defi.id }) }}" class="d-inline" onsubmit="return confirm('Supprimer ce défi ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('supprimer_defi_' ~ defi.id) }}">
+                                <button class="btn btn-outline-danger btn-sm">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+

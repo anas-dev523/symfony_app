@@ -3,7 +3,19 @@
 {% block title %}Retours sur le défi {{ defi.titre }}{% endblock %}
 
 {% block body %}
-    <h1>Retours d'expérience sur : {{ defi.titre }}</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3">Retours d'expérience sur : {{ defi.titre }}</h1>
+        <div class="btn-group">
+            {% if is_granted('ROLE_USER') %}
+                <a class="btn btn-primary" href="{{ path('app_retour_new', { id: defi.id }) }}">
+                    Partager mon retour
+                </a>
+                <a class="btn btn-outline-secondary" href="{{ path('app_demande_aide_new', { id: defi.id }) }}">
+                    Demander de l’aide
+                </a>
+            {% endif %}
+        </div>
+    </div>
 
     {% if retours is empty %}
         <p>Aucun retour pour ce défi pour l’instant.</p>

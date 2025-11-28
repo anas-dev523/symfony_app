@@ -3,19 +3,30 @@
 {% block title %}Admin - Retours{% endblock %}
 
 {% block body %}
-    <h1>Administration des retours d'expérience</h1>
+    <h1 class="mb-4">Administration des retours d'expérience</h1>
 
     {% if retours is empty %}
         <p>Aucun retour.</p>
     {% else %}
-        <ul>
+        <div class="list-group">
             {% for retour in retours %}
-                <li>
-                    <strong>Défi :</strong> {{ retour.defi.titre ?? 'N/A' }}<br>
-                    {{ retour.contenu }}<br>
-                    <small>{{ retour.dateRetour|date('d/m/Y H:i') }}</small>
-                </li>
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <p class="mb-1">{{ retour.contenu }}</p>
+                            <small>
+                                Défi : {{ retour.defi.titre ?? 'N/A' }} •
+                                Emoji : {{ retour.emoji }} •
+                                {{ retour.dateRetour|date('d/m/Y H:i') }}
+                            </small>
+                        </div>
+                        <form method="post" action="{{ path('app_admin_retour_supprimer', { id: retour.id }) }}" onsubmit="return confirm('Supprimer ce retour ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('supprimer_retour_' ~ retour.id) }}">
+                            <button class="btn btn-outline-danger btn-sm ms-3">Supprimer</button>
+                        </form>
+                    </div>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% endif %}
 {% endblock %}

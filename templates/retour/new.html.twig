@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau retour{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h1 class="mb-3">Partager un retour sur "{{ defi.titre }}"</h1>
+
+            {{ form_start(form) }}
+                {{ form_row(form.contenu) }}
+                {{ form_row(form.emoji) }}
+
+                <button class="btn btn-success mt-3">Envoyer mon retour</button>
+            {{ form_end(form) }}
+
+            <a href="{{ path('app_retour_index', { id: defi.id }) }}" class="btn btn-link mt-3">← Voir les retours</a>
+        </div>
+    </div>
+{% endblock %}
+

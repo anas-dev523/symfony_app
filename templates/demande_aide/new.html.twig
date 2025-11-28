@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demander de l'aide{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h1 class="mb-3">Demander de l’aide sur "{{ defi.titre }}"</h1>
+
+            {{ form_start(form) }}
+                {{ form_row(form.contenu) }}
+
+                <button class="btn btn-warning mt-3">Envoyer ma demande</button>
+            {{ form_end(form) }}
+
+            <a href="{{ path('app_retour_index', { id: defi.id }) }}" class="btn btn-link mt-3">← Retour au défi</a>
+        </div>
+    </div>
+{% endblock %}
+

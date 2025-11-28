@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DemandeAideRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DemandeAideRepository::class)]
 class DemandeAide
@@ -14,20 +15,28 @@ class DemandeAide
     private ?int $id = null;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: 'Merci de décrire votre besoin.')]
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'Votre message doit contenir au moins {{ limit }} caractères.'
+    )]
     private string $contenu;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private \DateTimeImmutable $dateDemande;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank]
     private string $statut;
 
     #[ORM\ManyToOne(inversedBy: 'demandesAide')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Vous devez être connecté pour demander de l’aide.')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'demandesAide')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Merci de préciser le défi concerné.')]
     private ?Defi $defi = null;
 
     public function getId(): ?int
